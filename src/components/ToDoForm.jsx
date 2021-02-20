@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -21,6 +22,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import coffee from "../images/coffee.jpg"
 import "../App.css";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { database } from "./firebase";
 
 
 // const useStyles = makeStyles({
@@ -48,38 +50,49 @@ const useStyles = makeStyles((theme) => ({
 marginTop: 8,
   },
   root: {
-    maxWidth: 600,
+    width: 600,
+    height: 400,
+    // maxWidth: 600,
   },
 }));
 
 
 export default function ToDoForm() {
+      const history = useHistory();
   const classes = useStyles();
-  // const [state, setState] = useState({
-  //   checkedA: false,
-  //   checkedB: false,
-  //   checkedC: false,
-  // });
+  const [title, setTitle] = useState("");
+  const [task, setTask] = useState("");
+  const [priorities, setPriorities] = useState();
+  const [deadline, setDeadline] = useState();
 
-  const [priorities, setPriorities]= useState()
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+            const newTask = {
+              title: title,
+              task: task,
+              priorities: priorities,
+              deadline: deadline,
+            };
+              database
+                .collection("tasks")
+                .add({
+                  newTask,
+                })
+                .then(function (docRef) {
+                  console.log("Document written with ID: ", docRef.id);
+                })
+                .catch(function (error) {
+                  console.error("Error adding document: ", error);
+                });
 
-  
-  // const theme = createMuiTheme({
-  //   palette: {
-  //     Secondary: {
-  //       // main: "#dc004e",
-  //       dark: "#9a0036",
-  //     },
-  //     Warning: {
-  //       light: "#ffb74d",
-  //     },
-  //   },
-  // });
+      console.log(newTask);
+      setTitle("");
+      setTask("");
+      setPriorities("");
+      setDeadline("");
+      history.push("/");
+    };
 
-
-  // const handleChange = (event) => {
-  //   setState({ ...state, [event.target.name]: event.target.checked });
-  // };
 
   return (
     <>
@@ -101,19 +114,31 @@ export default function ToDoForm() {
             />
             <CardContent>
               <FormGroup>
-                <TextField id="standard-basic" label="Title" />
+                <TextField
+                  id="standard-basic"
+                  label="Title"
+                  value={title}
+                  onChange={(event) => setTitle(event.target.value)}
+                />
               </FormGroup>
               <FormGroup>
-                <TextField id="standard-basic" label="Add Task" />
+                <TextField
+                  id="standard-basic"
+                  label="Add Task"
+                  value={task}
+                  onChange={(event) => setTask(event.target.value)}
+                />
               </FormGroup>
               <FormGroup row>
                 <FormControl className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Choose priority
+                  </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
+                    labelId="choose priority "
                     id="demo-simple-select"
                     value={priorities}
-                    // onChange={handleChange}
+                    onChange={(event) => setPriorities(event.target.value)}
                   >
                     <MenuItem value={1}>Important</MenuItem>
                     <MenuItem value={2}>Snoozed</MenuItem>
@@ -130,6 +155,8 @@ export default function ToDoForm() {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    value={deadline}
+                    onChange={(event) => setDeadline(event.target.value)}
                   />
                 </form>
               </FormGroup>
@@ -138,13 +165,15 @@ export default function ToDoForm() {
           <CardActions>
             <Grid
               container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className="container"
-      >
-              <Button variant="contained">Save</Button>
-              </Grid>
+              direction="row"
+              justify="center"
+              alignItems="center"
+              className="container"
+            >
+              <Button variant="contained" onClick={handleSubmit}>
+                Save
+              </Button>
+            </Grid>
           </CardActions>
         </Card>
       </Grid>
