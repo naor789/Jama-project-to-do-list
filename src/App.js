@@ -1,85 +1,64 @@
 import './App.css';
 import Home from './components/Home';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import ToDoForm from './components/ToDoForm';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import { Button, IconButton, Toolbar, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import ModalLogIn from './components/ModalLogIn';
-import ModalSignUp from './components/ModalSignUp';
-// import { AuthProvider } from './context/AuthContext';
+import LogIn from './components/LogIn';
+import SignUp from './components/SignUp';
+import { AuthProvider } from './context/AuthContext';
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
-import Task from './components/Task';
-import TasksList from './components/TaskList';
+import { auth } from "./components/firebase"
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-export const baseUrl = "http://localhost:5000"
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: 50,
-
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
 
 
 function App() {
-  const classes = useStyles();
+  const [user] = useAuthState(auth);
+
+
+  function SignIn() {
+
+    const signInWithGoogle = () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider);
+    }
+
+    return (
+      <>
+        <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
+        <p>Do not violate the community guidelines or you will be banned for life!</p>
+      </>
+    )
+
+  }
+
+  function SignOut() {
+    return auth.currentUser && (
+      <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+    )
+  }
 
 
   return (
-    // <AuthProvider>
-    <div className="container">
-      <Router>
-        <div className={classes.root}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                News
-          </Typography>
-                <Link to="/login">
-                  Log In
-      </Link>
-                  <Link to="/signup">
-                    Log In
-      </Link>
-
-            </Toolbar>
-          </AppBar>
-        </div>
-            <Switch>
-              <Route exact path="/">
-                <Home ></Home>
-              </Route>
-              <Route exact path="/todoform">
-                <ToDoForm ></ToDoForm>
-              </Route>
-              <Route exact path="/login">
-                <ModalLogIn ></ModalLogIn>
-              </Route>
-              <Route exact path="/signup">
-                <ModalSignUp ></ModalSignUp>
-              </Route>
-          <Route exact path="/tasklist">
-            <TasksList ></TasksList>
-          </Route>
-
-            </Switch>
+    <AuthProvider>
+      <div className="container">
+        <Router>
+          <Switch>
+            <Route exact path="/login">
+            <LogIn></LogIn>
+            </Route>
+            <Route path="/signup">
+            <SignOut></SignOut>
+            </Route> 
+            <Route exact path="/">
+              <Home></Home>
+            </Route>
+          </Switch>
         </Router>
+
         </div>
-    // </AuthProvider>
+     </AuthProvider>
   );
 }
 

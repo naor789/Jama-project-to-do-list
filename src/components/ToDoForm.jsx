@@ -16,14 +16,13 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  FormControl
+  FormControl,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import coffee from "../images/coffee.jpg"
+import coffee from "../images/coffee.jpg";
 import "../App.css";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { database } from "./firebase";
-
 
 // const useStyles = makeStyles({
 //   root: {
@@ -47,52 +46,59 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   textField: {
-marginTop: 8,
+    marginTop: 8,
   },
   root: {
     width: 600,
     height: 400,
     // maxWidth: 600,
   },
+  text: {
+    fontFamily: "RocknRoll One, sans-serif",
+  },
 }));
 
-
 export default function ToDoForm() {
-      const history = useHistory();
+  const history = useHistory();
   const classes = useStyles();
   const [title, setTitle] = useState("");
   const [task, setTask] = useState("");
   const [priorities, setPriorities] = useState();
   const [deadline, setDeadline] = useState();
 
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-            const newTask = {
-              title: title,
-              task: task,
-              priorities: priorities,
-              deadline: deadline,
-            };
-              database
-                .collection("tasks")
-                .add({
-                  newTask,
-                })
-                .then(function (docRef) {
-                  console.log("Document written with ID: ", docRef.id);
-                })
-                .catch(function (error) {
-                  console.error("Error adding document: ", error);
-                });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // const start = Date.now();
+    // const date = { currentTime: new Date().toLocaleString() };
 
-      console.log(newTask);
-      setTitle("");
-      setTask("");
-      setPriorities("");
-      setDeadline("");
-      history.push("/");
-    };
+    // const newTask = {
+    //   title: title,
+    //   task: task,
+    //   priorities: priorities,
+    //   deadline: deadline,
+    // };
+    database
+      .collection("tasks")
+      .add({
+        title: title,
+        task: task,
+        priorities: priorities,
+        deadline: deadline,
+      })
+      .then(function (docRef) {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+      });
 
+    console.log("new task");
+    setTitle("");
+    setTask("");
+    setPriorities("");
+    setDeadline("");
+    history.push("/tasklist");
+  };
 
   return (
     <>
@@ -117,6 +123,7 @@ export default function ToDoForm() {
                 <TextField
                   id="standard-basic"
                   label="Title"
+                  className={classes.text}
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                 />
@@ -125,6 +132,7 @@ export default function ToDoForm() {
                 <TextField
                   id="standard-basic"
                   label="Add Task"
+                  className={classes.text}
                   value={task}
                   onChange={(event) => setTask(event.target.value)}
                 />
@@ -137,6 +145,7 @@ export default function ToDoForm() {
                   <Select
                     labelId="choose priority "
                     id="demo-simple-select"
+                    className={classes.text}
                     value={priorities}
                     onChange={(event) => setPriorities(event.target.value)}
                   >
@@ -150,7 +159,7 @@ export default function ToDoForm() {
                     id="date"
                     label="Deadline"
                     type="date"
-                    defaultValue="2017-05-24"
+                    defaultValue="2021-02-21"
                     className={classes.textField}
                     InputLabelProps={{
                       shrink: true,

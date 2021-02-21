@@ -1,60 +1,85 @@
-import React, { useState , useEffect} from "react";
-// import ToDoForm from "./ToDoForm";
-import { Button , Link} from "@material-ui/core";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route , Link} from "react-router-dom";
 import "../App.css";
 import TasksList from "./TaskList";
-import { database } from "./firebase";
+import ToDoForm from "../components/ToDoForm";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  IconButton,
+  Toolbar,
+  Typography,
+  AppBar,
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import LogIn from "../components/LogIn";
+import SignUp from "../components/SignUp";
+import { AuthProvider } from "../context/AuthContext";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginBottom: 50,
+    backgroundColor: "#388e3c",
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  nav: {
+    backgroundColor: "#388e3c",
+      
+  },
+  title: {
+    flexGrow: 1,
+    marginLeft: 45,
+    textDecoration: "none",
+    color: "white",
+    fontFamily: "RocknRoll One, sans-serif",
 
+  },
+}));
 
 export default function Home() {
-//       const [tasksList, setTasksList] = useState([]);
- 
-    
-//   useEffect(() => {
-//     const loadUserData = database
-//       .collection("tasks")
-//       .onSnapshot((querySnapshot) => {
-//         const tasks = [];
-//         querySnapshot.forEach((doc) => {
-//           tasks.push(Object.assign(doc.data(), { id: doc.id }));
-//         });
-//         // tasks.sort(function (a, b) {
-//         //   return (
-//         //     new Date(b.tweet.date).getTime() - new Date(a.tweet.date).getTime()
-//         //   );
-//         // });
-//         setTasksList(() => tasks);
-//       });
-//     // return () => {
-//       loadUserData();
-//     // };
-//   }, []);
+  const classes = useStyles();
 
-    // function addTweet(task) {
-    //   setTimeout(() => {
-    //     database
-    //       .collection("tasks")
-    //       .add({
-    //         task,
-    //       })
-    //       .then(function (docRef) {
-    //         console.log("Document written with ID: ", docRef.id);
-    //       })
-    //       .catch(function (error) {
-    //         console.error("Error adding document: ", error);
-    //       });
-    //   }, 1000);
-    // }
 
-    
   return (
     <>
       <div className="container">
-        <h1 className="welcome">Welcome </h1>
-              <Button variant="contained">To Do List</Button>
-              <Button variant="contained">Add Task</Button>
+        <Router>
+          <div className={classes.root}>
+            <AppBar position="static" className={classes.nav} >
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="h6">
+                  <Link to="/todoform" className={classes.title}>
+                    Add Task
+                  </Link>{" "}
+                  <Link to="/tasklist" className={classes.title}>
+                    To Do List
+                  </Link>
+                </Typography>
+              </Toolbar>
+            </AppBar>
+          </div>
+          <Switch>
+            <Route path="/todoform">
+              <ToDoForm></ToDoForm>
+            </Route>
+            <Route path="/tasklist">
               <TasksList></TasksList>
+            </Route>
+          </Switch>
+        </Router>
       </div>
     </>
   );
