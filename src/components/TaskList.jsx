@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Task from "./Task";
-import { TaskContext } from "../context/TaskContext";
 import { database, app } from "./firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 
 export default function TasksList() {
@@ -13,10 +11,18 @@ export default function TasksList() {
     const loadUserData = database
       .collection("tasks")
       .onSnapshot((querySnapshot) => {
+        console.log(querySnapshot);
         const task = [];
         querySnapshot.forEach((doc) => {
           task.push(Object.assign(doc.data(), { id: doc.id }));
         });
+        task.sort(function (a, b) {
+          return (
+            new Date(b.date).getTime() - new Date(a.date).getTime() &&
+            a.priorities - b.priorities
+          );
+        });
+
         setTasksList(task);
       });
     return () => {

@@ -1,25 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route , Link} from "react-router-dom";
+// import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "../App.css";
-import TasksList from "./TaskList";
-import ToDoForm from "../components/ToDoForm";
-import LandingPage from "./LandingPage";
-import NavBar from "./NavBar";
+// import TasksList from "./TaskList";
+// import ToDoForm from "../components/ToDoForm";
+// import LandingPage from "./LandingPage";
+// import NavBar from "./NavBar";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  IconButton,
-  Toolbar,
-  Typography,
-  AppBar,
-} from "@material-ui/core";
 import "firebase/auth";
 import "firebase/firestore";
 import SvgIcon from "@material-ui/core/SvgIcon";
-// import LogIn from "../components/LogIn";
-// import SignUp from "../components/SignUp";
-import { AuthProvider } from "../context/AuthContext";
-import firebase from "firebase/app";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,7 +54,7 @@ function HomeIcon(props) {
   return (
     <>
       <div className="container">
-        <Router>
+        {/* <Router>
           <NavBar></NavBar>
           <Switch>
             <Route path="/todoform">
@@ -77,7 +67,7 @@ function HomeIcon(props) {
               <LandingPage></LandingPage>
             </Route>
           </Switch>
-        </Router>
+        </Router> */}
       </div>
     </>
   );

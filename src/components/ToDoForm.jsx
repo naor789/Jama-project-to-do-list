@@ -4,15 +4,12 @@ import {
   Button,
   TextField,
   FormGroup,
-  Switch,
-  FormControlLabel,
   Card,
   CardActionArea,
   CardMedia,
   CardContent,
   CardActions,
   Grid,
-  ThemeProvider,
   InputLabel,
   Select,
   MenuItem,
@@ -21,21 +18,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import coffee from "../images/coffee.jpg";
 import "../App.css";
-import { createMuiTheme } from "@material-ui/core/styles";
 import { database } from "./firebase";
 
-// const useStyles = makeStyles({
-//   root: {
-//     maxWidth: 600,
-//   },
-//   formControl: {
-//     margin: theme.spacing(1),
-//     minWidth: 120,
-//   },
-//   selectEmpty: {
-//     marginTop: theme.spacing(2),
-//   },
-// });
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -70,14 +54,9 @@ export default function ToDoForm() {
   const [priorities, setPriorities] = useState();
   const [deadline, setDeadline] = useState();
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const newTask = {
-    //   title: title,
-    //   task: task,
-    //   priorities: priorities,
-    //   deadline: deadline,
-    // };
     database
       .collection("tasks")
       .add({
@@ -85,6 +64,8 @@ export default function ToDoForm() {
         task: task,
         priorities: priorities,
         deadline: deadline,
+        date: Date.now(),
+        // createdAt: firebase.fieldValue.serverTimestamp(),
       })
       .then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);

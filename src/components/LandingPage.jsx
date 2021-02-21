@@ -1,7 +1,6 @@
 
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { AppBar, Container, Grid, IconButton, Toolbar, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import cupcake from "../images/cupcake.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 import SvgIcon from "@material-ui/core/SvgIcon";

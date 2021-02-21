@@ -10,7 +10,7 @@ import 'firebase/firestore'
     projectId: "jama-5f3cf",
     storageBucket: "jama-5f3cf.appspot.com",
     messagingSenderId: "650485490296",
-    appId: "1:650485490296:web:e7af04fcde99fc58d3838d"
+    appId: "1:650485490296:web:e7af04fcde99fc58d3838d",
 
 });
 
