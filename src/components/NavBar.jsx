@@ -3,10 +3,11 @@ import { BrowserRouter , Link } from "react-router-dom";
 import "../App.css";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton, Toolbar, Typography, AppBar } from "@material-ui/core";
+import { IconButton, Toolbar, Typography, AppBar , Button } from "@material-ui/core";
 import "firebase/auth";
 import "firebase/firestore";
 import SvgIcon from "@material-ui/core/SvgIcon";
+import firebase from "firebase";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,14 +31,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar(props) {
   const classes = useStyles();
-  const history = useHistory();
+    const history = useHistory();
+    const isSignedIn = props.isSignedIn;
 
   const handleOnClick = () => {
     history.push("/landingpage");
   };
 
+    const handleLogOut = () => {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+              history.push("/")
+          })
+          .catch((error) => {
+            // An error happened.
+          });
+      
+  }
+
+    
   function HomeIcon(props) {
     return (
       <SvgIcon {...props}>
@@ -68,6 +84,13 @@ export default function NavBar() {
                 <Link to="/tasklist" className={classes.title}>
                   To Do List
                 </Link>
+                <Button
+                  variant="contained"
+                  onClick={handleLogOut}
+                  type="button"
+                >
+                  Log Up{" "}
+                </Button>
               </Typography>
             </Toolbar>
           </AppBar>

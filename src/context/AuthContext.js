@@ -22,14 +22,13 @@ export default function AuthProvider({ children }) {
         return auth.signOut()
     }
 
-    // useEffect(() => {
-    //     const unsubscribe = auth.onAuthStateChanged(user => {
-    //         setCurrentUser(user)
-    //         setLoading(false)
-    //     })
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            setCurrentUser(user)
+        })
 
-    //     return unsubscribe
-    // }, [])
+        return unsubscribe
+    }, [])
 
     const value = {
         currentUser,

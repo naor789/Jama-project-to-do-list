@@ -10,6 +10,7 @@ import {
 import importanttt from "../images/importanttt.jpg";
 import snooze from "../images/snooze.jpg";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { database } from "./firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +51,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Task(props) {
   const classes = useStyles();
-  const { title, task, priorities, deadline, date } = props.task;
+  const { title, task, priorities, deadline, date , id } = props.task;
+
+  const deleteTask = () => {
+    database
+      .collection("tasks")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+  };
 
   return (
     <div className={classes.root}>
@@ -113,11 +127,7 @@ export default function Task(props) {
                   Deadline: {deadline}
                 </Typography>
               </Grid>
-              <Grid
-                container
-                justify="flex-end"
-                alignItems="flex-end"
-              >
+              <Grid container justify="flex-end" alignItems="flex-end">
                 <Button
                   className={classes.button}
                   style={{ cursor: "pointer" }}
@@ -129,6 +139,7 @@ export default function Task(props) {
                   color="secondary"
                   className={classes.button}
                   startIcon={<DeleteIcon />}
+                  onClick={deleteTask}
                 >
                   Delete
                 </Button>

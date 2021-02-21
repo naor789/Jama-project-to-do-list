@@ -12,14 +12,14 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { app , auth} from "./firebase";
+import { app, auth } from "./firebase";
 import { useAuth } from "../context/AuthContext";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase";
 import firebaseui from "firebaseui";
 import Home from "./Home";
 import { AuthContext } from "../context/AuthContext";
-
+import { userInfo } from "os";
 
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
   link: {
     textDecoration: "none",
     color: "#1976d2",
-  }
+  },
 });
 
 // firebase.initializeApp({
@@ -63,17 +63,20 @@ const useStyles = makeStyles({
 
 export default function LogIn() {
   const classes = useStyles();
-    // const [currentUser, setCurrentUser] = useContext(AuthContext);
+  // const [currentUser, setCurrentUser] = useContext(AuthContext);
 
   // const { app } = useAuth();
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
   const history = useHistory();
   const [user] = useAuthState(auth);
+  const [currentUser, setCurrentUser] = useState([]);
+  const [name, setName] = useState("");
+  // const [isSignedIn, setIsSignedIn] = useState({
+  //   isSignedIn: false,
+  // });
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
-  const [isSignedIn, setIsSignedIn] = useState({
-    isSignedIn: false,
-  });
   const uiConfig = {
     signInFlow: "popup",
     signInOptions: [
@@ -81,47 +84,44 @@ export default function LogIn() {
       firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
-    // callbacks: {
-    //   signInSuccess: () => false
-    // }
+    callbacks: {
+      signInSuccess: () => false,
+    },
   };
 
   useEffect(() => {
+    // firebase.auth().setPersistence.then( )
     firebase.auth().onAuthStateChanged((user) => {
       setIsSignedIn({ isSignedIn: !!user });
-            // setCurrentUser(user);
-      console.log("user", user);
+      console.log("hi", firebase.auth().currentUser.displayName);
+      setName(firebase.auth().currentUser.displayName);
+      // console.log("hhhhhhhhhhhhhh", firebase.auth().currentUser);
+      // currentUser.push(firebase.auth().currentUser);
+
+      // setCurrentUser(firebase.auth().currentUser);
+
+      console.log(currentUser, "yhgjygdgdhfd");
+      // history.push("/home");
+      // window.location.reload();
     });
   }, []);
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // const logIn = await axios.post(`${baseURL}/api/user/login`, {
-    //   email: email,
-    //   password: password,
-    // });
-    // if (logIn.status === 200) {
-    //   localStorage.setItem("token", JSON.stringify(logIn.data));
-    //   setCurrentUser(logIn.data);
-    // }
-    // setPassword("");
-    // setEmail("");
-    // setModalLogIn(false);
-    history.push("/home");
-  };
-
-  // const signInWithGoogle = () => {
-  //   auth.signInWithPopup(provider);
-  //   {
-  //     currentUser ? history.push("/") : history.push("/Home");
-  //   }
+  //   history.push("/home");
   // };
 
   return (
     <div>
-      {isSignedIn.isSignedIn ? (
+      {isSignedIn ? (
+        <div>
+          <Home user={name} isSignedIn={isSignedIn}>
+            {" "}
+          </Home>
+          {/* <h1>{firebase.auth().currentUser.displayName}</h1> */}
+        </div>
+      ) : (
         <Grid
           container
           direction="column"
@@ -137,42 +137,6 @@ export default function LogIn() {
                 alignItems="center"
               >
                 <div>
-                  {/* <Grid
-                container
-                direction="col"
-                justify="center"
-                alignItems="center"
-              >
-                <h1>Log In</h1>
-              </Grid>
-              <div>
-                <TextField
-                  label="Email"
-                  id="outlined-size-normal"
-                  //   defaultValue="Normal"
-                  variant="outlined"
-                  className={classes.textField}
-                />
-              </div>
-              <div>
-                <TextField
-                  label="Password"
-                  id="outlined-size-normal"
-                  //   defaultValue="Normal"
-                  variant="outlined"
-                  className={classes.textField}
-                />
-              </div>
-              <Grid
-                container
-                direction="col"
-                justify="center"
-                alignItems="center"
-              >
-                <Button onClick={handleSubmit} type="button">
-                  Log In{" "}
-                </Button>
-              </Grid> */}
                   <Grid
                     container
                     direction="row"
@@ -200,25 +164,13 @@ export default function LogIn() {
                   </Link>
                 </div>
               </Grid>
-
-              {/* <Grid container direction="row" justify="center" alignItems="center">
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
-          </Grid> */}
             </CardActions>
-            {/* <Grid container direction="col" justify="center" alignItems="center">
-          <div>
-            <Link className={classes.link} to={"/signup"}>
-              Sign Up
-            </Link>
-          </div>
-        </Grid> */}
           </Card>
         </Grid>
-      ) : (
-        <Home></Home>
+        // <div>
+        //   <Home user={name}></Home>
+        //   {/* <h1>{firebase.auth().currentUser.displayName}</h1> */}
+        // </div>
       )}
     </div>
   );

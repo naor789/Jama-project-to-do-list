@@ -10,22 +10,23 @@ import ToDoForm from "./components/ToDoForm";
 import TasksList from "./components/TaskList";
 import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar";
+import AuthProvider from "./context/AuthContext";
 
 
 export default function App() {
 
   return (
-    // <AuthProvider>
+    <AuthProvider>
     <Router>
-      <NavBar></NavBar>
+      {/* <NavBar></NavBar> */}
         <div className="container">
           <Switch>
           <Route exact path="/" component={LogIn} />
             <Route path="/signup" component={SignUp} />
             <Route path="/home" component={Home} />
-                    <Route exact path="/">
+                    {/* <Route exact path="/">
                       <LogIn></LogIn>
-                    </Route>
+                    </Route> */}
           <Route path="/todoform">
             <ToDoForm></ToDoForm>
           </Route>
@@ -40,7 +41,7 @@ export default function App() {
 
 </div>
                 </Router>
-    // </AuthProvider>
+    </AuthProvider>
   );
 }
 

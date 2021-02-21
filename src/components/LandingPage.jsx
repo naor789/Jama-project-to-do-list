@@ -34,18 +34,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function LandingPage() {
+export default function LandingPage(props) {
     const classes = useStyles();
       const history = useHistory();
+    const  name  = props.name;
 
-
-    function HomeIcon(props) {
-      return (
-        <SvgIcon {...props}>
-          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-        </SvgIcon>
-      );
-    }
 
       const handleOnClick = () => {
         history.push("/landingpage");
@@ -54,8 +47,9 @@ export default function LandingPage() {
 
     return (
       <>
-        <Grid container direction="col" justify="center" alignItems="center">
-          <h1>Welcom </h1>{" "}
+            <Grid container direction="col" justify="center" alignItems="center">
+                
+                <h1>Welcom {name? name : "user"}</h1>{" "}
         </Grid>
         <Grid container direction="col" justify="center" alignItems="center">
           <img src={cupcake} alt="cupcake" className={classes.image} />
