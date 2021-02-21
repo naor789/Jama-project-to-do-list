@@ -1,169 +1,147 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory , Link } from "react-router-dom";
 // import axios from "axios";
-import { Button, TextField } from "@material-ui/core";
+import {
+  Button,
+  Box,
+  Card,
+  CardContent,
+  CardActions,
+  Grid,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import { database } from "./firebase";
 import { auth, provider } from "./firebase";
 import { useAuth } from "../context/AuthContext";
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: 200,
-    },
+    maxWidth: 350,
+    marginTop: 50,
+    borderRadius: 15,
   },
-}));
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+  textField: {
+    margin: 15,
+  },
+  link: {
+    textDecoration: "none",
+    color: "#1976d2",
+  },
+});
 
-// import { UserContext } from "../context/UserContext";
+export default function SignUp() {
+  const classes = useStyles();
+  // const { login, currentUser } = useAuth();
 
-export default function ModalSignUp() {
-      const classes = useStyles();
-    const { signup, currentUser } = useAuth();
-
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [modalSignUp, setModalSignUp] = useState(false);
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [email, setEmail] = useState();
   const history = useHistory();
-//   const { setCurrentUser, baseURL } = useContext(UserContext);
-
-  const openModalSignUp = () => setModalSignUp(true);
-
-  const handleClose = () => setModalSignUp(false);
+  //   const { setCurrentUser, baseURL } = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const response = await axios.post(`${baseURL}/api/user/register`, {
-    //   email: email,
-    //   password: password,
-    //   confirmPassword: confirmPassword,
-    //   firstName: firstName,
-    //   lastName: lastName,
-    //   phoneNumber: phoneNumber,
-    // });
-    // const logIn = await axios.post(`${baseURL}/api/user/login`, {
-    //   email: email,
-    //   password: password,
-    // });
-    // if (logIn.status === 200) {
-    //   localStorage.setItem("token", response.data);
-    //   setCurrentUser(logIn.data);
-    //   localStorage.setItem("user", JSON.stringify(logIn.data));
-    // }
-    // setPhoneNumber("");
-    // setFirstName("");
-    // setLastName("");
-    // setPassword("");
-    // setConfirmPassword("");
-    // setEmail("");
-    // setModalSignUp(false);
-    history.push("/");
+        database
+      .collection("users")
+          .add({
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+      })
+      .then(function (docRef) {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+      });
+
+    console.log("userr" );
+    setPassword("");
+    setConfirmPassword("");
+    setEmail("");
+    history.push("/home");
   };
 
   return (
-    <>
-      {/* <Button
-        className="btn btn-secondary my-2 my-sm-0 mr-4"
-        type="button"
-        onClick={openModalSignUp}
-      >
-        Sign Up{" "}
-      </Button> */}
+    <Grid container direction="column" justify="flex-start" alignItems="center">
+      <Card className={classes.root} variant="outlined">
+        <CardContent>
+          <Grid container direction="row" justify="center" alignItems="center">
+            <div>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <h1>Sign up</h1>
+              </Grid>
+              <div>
+                <TextField
+                  label="Email"
+                  id="outlined-size-normal"
+                  //   defaultValue="Normal"
+                  variant="outlined"
+                  className={classes.textField}
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
 
-          <modal show={modalSignUp} onHide={handleClose}>
-              <form className={classes.root} noValidate autoComplete="off">
-                  <h1>Log In</h1>
-          <div>
-            <TextField
-              label="Email"
-              id="outlined-size-normal"
-            //   defaultValue="Normal"
-              variant="outlined"
-            />
-          </div>
-          <div>
-            <TextField
-              label="Password"
-              id="outlined-size-normal"
-            //   defaultValue="Normal"
-              variant="outlined"
-            />
-          </div>
-        </form>
+                />
+              </div>
+              <div>
+                <TextField
+                  label="Password"
+                  id="outlined-size-normal"
+                  //   defaultValue="Normal"
+                  variant="outlined"
+                  className={classes.textField}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
 
-        {/* <Modal.Header>
-          <Modal.Title>Sign Up</Modal.Title>
-          <Button variant="light" onClick={handleClose} type="button">
-            x
-          </Button>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                value={email}
-                required
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                value={password}
-                required
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </Form.Group>
-            <Form.Group id="confirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                value={confirmPassword}
-                required
-                onChange={(event) => setConfirmPassword(event.target.value)}
-              />
-            </Form.Group>
-            <Form.Group id="firsName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="email"
-                value={firstName}
-                required
-                onChange={(event) => setFirstName(event.target.value)}
-              />
-            </Form.Group>
-            <Form.Group id="lastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="email"
-                value={lastName}
-                required
-                onChange={(event) => setLastName(event.target.value)}
-              />
-            </Form.Group>
-            <Form.Group id="phoneNumber">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="email"
-                value={phoneNumber}
-                required
-                onChange={(event) => setPhoneNumber(event.target.value)}
-              />
-            </Form.Group> */}
-            <Button onClick={handleSubmit} className="w-100 mt-3" type="button">
-              Sign Up{" "}
+                />
+              </div>
+              <div>
+                <TextField
+                  label="Confirm Password"
+                  id="outlined-size-normal"
+                  //   defaultValue="Normal"
+                  variant="outlined"
+                  className={classes.textField}
+                  value={confirmPassword}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
+
+                />
+              </div>
+            </div>
+          </Grid>
+        </CardContent>
+        <CardActions>
+          <Grid container direction="row" justify="center" alignItems="center">
+            <Button variant="contained" onClick={handleSubmit} type="button">
+              Sign up{" "}
             </Button>
-          {/* </Form>
-        </Modal.Body> */}
-      </modal>
-    </>
+          </Grid>
+          <Grid container direction="col" justify="center" alignItems="center">
+            <div>
+              <Link className={classes.link} to={"/"}>
+                Log In{" "}
+              </Link>
+            </div>
+          </Grid>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 }

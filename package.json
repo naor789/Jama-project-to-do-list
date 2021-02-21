@@ -13,10 +13,12 @@
     "firebase": "^8.2.9",
     "firebase-tools": "^9.4.0",
     "hoist-non-react-statics": "^3.3.2",
+    "node": "^15.8.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-firebase": "^2.2.8",
     "react-firebase-hooks": "^2.2.0",
+    "react-firebaseui": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.0.1"

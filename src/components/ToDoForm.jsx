@@ -50,11 +50,15 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     width: 600,
-    height: 400,
-    // maxWidth: 600,
+    height: 500,
+    borderRadius: 15,
   },
   text: {
     fontFamily: "RocknRoll One, sans-serif",
+  },
+  image: {
+    maxWidth: 600,
+    height: 250,
   },
 }));
 
@@ -68,9 +72,6 @@ export default function ToDoForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const start = Date.now();
-    // const date = { currentTime: new Date().toLocaleString() };
-
     // const newTask = {
     //   title: title,
     //   task: task,
@@ -117,6 +118,7 @@ export default function ToDoForm() {
               height="140"
               image={coffee}
               title="coffee"
+              className={classes.image}
             />
             <CardContent>
               <FormGroup>
@@ -137,24 +139,29 @@ export default function ToDoForm() {
                   onChange={(event) => setTask(event.target.value)}
                 />
               </FormGroup>
-              <FormGroup row>
-                <FormControl className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-label">
-                    Choose priority
-                  </InputLabel>
-                  <Select
-                    labelId="choose priority "
-                    id="demo-simple-select"
-                    className={classes.text}
-                    value={priorities}
-                    onChange={(event) => setPriorities(event.target.value)}
-                  >
-                    <MenuItem value={1}>Important</MenuItem>
-                    <MenuItem value={2}>Snoozed</MenuItem>
-                  </Select>
-                </FormControl>
-
-                <form className={classes.container} noValidate>
+                <FormGroup row>
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+              >
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-label">
+                       Priority
+                    </InputLabel>
+                    <Select
+                      labelId="choose priority "
+                      id="demo-simple-select"
+                      className={classes.text}
+                      value={priorities}
+                      onChange={(event) => setPriorities(event.target.value)}
+                    >
+                      <MenuItem value={1}>Important</MenuItem>
+                      <MenuItem value={2}>Snoozed</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {/* <form className={classes.container} noValidate> */}
                   <TextField
                     id="date"
                     label="Deadline"
@@ -167,7 +174,8 @@ export default function ToDoForm() {
                     value={deadline}
                     onChange={(event) => setDeadline(event.target.value)}
                   />
-                </form>
+                  {/* </form> */}
+                </Grid>
               </FormGroup>
             </CardContent>
           </CardActionArea>

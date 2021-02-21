@@ -4,11 +4,13 @@ import {
   Button,
   ButtonBase,
   Grid,
+  IconButton,
   Paper,
   Typography,
 } from "@material-ui/core";
-import important from "../images/important.jpg";
+import importanttt from "../images/importanttt.jpg";
 import snooze from "../images/snooze.jpg";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 
 
@@ -20,16 +22,17 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     margin: "auto",
-    maxWidth: 500,
+    maxWidth: 550,
     fontFamily: "RocknRoll One, sans-serif",
     backgroundColor: "rgba(255, 255, 255, 0.7)",
+    borderRadius: 15,
   },
   text: {
     fontFamily: "RocknRoll One, sans-serif",
   },
   image: {
-    width: 128,
-    height: 128,
+    width: 135,
+    height: 135,
   },
   img: {
     margin: "auto",
@@ -38,8 +41,10 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100%",
   },
   button: {
-    backgroundColor: "#ffb74d",
+    backgroundColor: "#586A7C",
+    color: "#fff",
     fontFamily: "RocknRoll One, sans-serif",
+    marginRight: 10,
   },
 }));
 
@@ -54,7 +59,7 @@ export default function Task(props) {
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="important" src={important} />
+                <img className={classes.img} alt="important" src={importanttt} />
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>
@@ -101,6 +106,14 @@ export default function Task(props) {
                     style={{ cursor: "pointer" }}
                   >
                     Done
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
                   </Button>
                 </Grid>
               </Grid>
@@ -165,6 +178,14 @@ export default function Task(props) {
                     style={{ cursor: "pointer" }}
                   >
                     Done
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
                   </Button>
                 </Grid>
               </Grid>
