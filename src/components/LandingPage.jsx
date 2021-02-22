@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import cupcake from "../images/cupcake.jpg";
 import { makeStyles } from "@material-ui/core/styles";
-import SvgIcon from "@material-ui/core/SvgIcon";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,21 +30,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LandingPage(props) {
   const classes = useStyles();
-  const history = useHistory();
   const [name, setName] = useState("");
   useEffect(() => {
     setName(props.name);
   }, []);
 
-  const handleOnClick = () => {
-    history.push("/landingpage");
-  };
-
   return (
     <>
       <Grid container direction="col" justify="center" alignItems="center">
-        <h1>Welcom {name ? name : "user"}</h1>{" "}
-      </Grid>
+        <h1>Welcom {name ? name : "user"}</h1>
+          </Grid>
+           <Grid container direction="col" justify="center" alignItems="center">
+      <div>"Either you run the day , or the day runs you" </div>
+      <div>- Jim Rohn</div>
+</Grid>
       <Grid container direction="col" justify="center" alignItems="center">
         <img src={cupcake} alt="cupcake" className={classes.image} />
       </Grid>

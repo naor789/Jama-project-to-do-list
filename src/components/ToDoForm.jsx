@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import coffee from "../images/coffee.jpg";
+
 import "../App.css";
 import { database } from "./firebase";
 import NavBar from "./NavBar";

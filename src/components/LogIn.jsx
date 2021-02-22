@@ -112,58 +112,48 @@ export default function LogIn() {
   return (
     <div>
       {isSignedIn.isSignedIn ? (
-        <div>
-          <Home user={name} isSignedIn={isSignedIn}>
-            {" "}
-          </Home>
-          {/* <h1>{firebase.auth().currentUser.displayName}</h1> */}
-        </div>
+        <Home user={name} isSignedIn={isSignedIn}></Home>
       ) : (
-        <Grid
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="center"
-        >
-          <Card className={classes.root} variant="outlined">
-            <CardContent>
-              <Grid
-                container
-                direction="col"
-                justify="center"
-                alignItems="center"
-              >
-                <div>
-                  <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <StyledFirebaseAuth
-                      uiConfig={uiConfig}
-                      firebaseAuth={firebase.auth()}
-                    />
-                  </Grid>
-                </div>
-              </Grid>
-            </CardContent>
-            <CardActions>
-              <Grid
-                container
-                direction="col"
-                justify="center"
-                alignItems="center"
-              >
-                <div>
-                  <Link className={classes.link} to={"/signup"}>
-                    Sign Up
-                  </Link>
-                </div>
-              </Grid>
-            </CardActions>
-          </Card>
+        // <Grid
+        //   container
+        //   direction="column"
+        //   justify="flex-start"
+        //   alignItems="center"
+        // >
+        //   <Card className={classes.root} variant="outlined">
+        //     <CardContent>
+        //       <Grid
+        //         container
+        //         direction="col"
+        //         justify="center"
+        //         alignItems="center"
+        //       >
+        // <div>
+        <Grid container direction="row" justify="center" alignItems="flex-end">
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
         </Grid>
+        // </div>
+        //       </Grid>
+        //     </CardContent>
+        //     <CardActions>
+        //       <Grid
+        //         container
+        //         direction="col"
+        //         justify="center"
+        //         alignItems="center"
+        //       >
+        //         <div>
+        //           <Link className={classes.link} to={"/signup"}>
+        //             Sign Up
+        //           </Link>
+        //         </div>
+        //       </Grid>
+        //     </CardActions>
+        //   </Card>
+        // </Grid>
         // <div>
         //   <Home user={name}></Home>
         //   {/* <h1>{firebase.auth().currentUser.displayName}</h1> */}

@@ -32,13 +32,13 @@ export default function TasksList() {
   }, []);
 
   return (
-          <div className="container">
-            <NavBar></NavBar>
-    <Grid direction="column" justify="space-evenly" alignItems="center">
-      {tasksList.map((task) => (
-        <Task key={task.id} task={task} />
-      ))}
+    <div className="container">
+      <NavBar></NavBar>
+      <Grid direction="column" justify="space-evenly" alignItems="center">
+        {tasksList.map((task) => (
+          <Task key={task.id} task={task} />
+        ))}
       </Grid>
-      </div>
+    </div>
   );
 }

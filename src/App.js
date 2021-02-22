@@ -33,11 +33,7 @@ export default function App() {
             <Route path="/tasklist">
               <TasksList></TasksList>
             </Route>
-            <Route path="/landingpage">
-              <LandingPage></LandingPage>
-            </Route>
           </Switch>
-
 
         </div>
       </Router>

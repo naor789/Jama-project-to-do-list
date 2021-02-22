@@ -43,7 +43,7 @@ export default function NavBar(props) {
   const [isSignedIn, setIsSignedIn] = useState(props.isSignedIn);
 
   const handleOnClick = () => {
-    history.push("/landingpage");
+    history.push("/home");
   };
 
   const handleLogOut = () => {

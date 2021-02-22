@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, ButtonBase, Grid, Paper, Typography } from "@material-ui/core";
-import importanttt from "../images/importanttt.jpg";
-import snooze from "../images/snooze.jpg";
+import snooze3 from "../images/snooze3.png";
+import important4 from "../images/important4.png";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { database } from "./firebase";
 import firebase from "firebase";
@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     margin: "auto",
-    maxWidth: 550,
+    minHeight: 250,
+    maxWidth: 500,
     fontFamily: "RocknRoll One, sans-serif",
     backgroundColor: "rgba(255, 255, 255, 0.7)",
     borderRadius: 15,
@@ -26,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
   paperDone: {
     padding: theme.spacing(2),
     margin: "auto",
-    maxWidth: 550,
+    minHeight: 250,
+    maxWidth: 500,
     fontFamily: "RocknRoll One, sans-serif",
     backgroundColor: "rgba(255, 255, 255, 0.7)",
     borderRadius: 15,
@@ -54,7 +56,10 @@ const useStyles = makeStyles((theme) => ({
   },
   date: {
     fontSize: 13,
-    borderBottom: "1px solid black",
+    marginBottom: 20,
+  },
+  grid: {
+    marginBottom:20,
   },
 }));
 
@@ -142,26 +147,17 @@ export default function Task(props) {
             direction="row"
             justify="space-evenly"
             alignItems="center"
+            className={classes.grid}
           >
             <Grid
-            // item
-            // xs
-            // direction="row"
-            // justify="center"
-            // alignItems="center"
-            // className="container"
             >
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                className={classes.text}
-              >
-                Task title: {title}
+              <Typography gutterBottom variant="h5" className={classes.text}>
+                {title}
               </Typography>
-              <Typography variant="body2" gutterBottom className={classes.text}>
-                Task: {task}
+              <Typography variant="body1" gutterBottom className={classes.text}>
+                {task}
               </Typography>
-              <Typography variant="body2" gutterBottom className={classes.text}>
+              <Typography variant="body3" gutterBottom className={classes.text}>
                 Deadline: {deadline}
               </Typography>
             </Grid>
@@ -171,16 +167,20 @@ export default function Task(props) {
                   <img
                     className={classes.img}
                     alt="important"
-                    src={importanttt}
+                    src={important4}
                   />
                 ) : (
-                  <img className={classes.img} alt="snooze" src={snooze} />
+                  <img className={classes.img} alt="snooze" src={snooze3} />
                 )}
               </ButtonBase>
             </Grid>
           </Grid>
-          {/* </Grid> */}
-          <Grid container justify="space-around">
+          <Grid
+            container
+            direction="row"
+            justify="space-around"
+            alignItems="flex-end"
+          >
             <Button
               className={classes.button}
               onClick={handleDoneTask}
@@ -188,14 +188,6 @@ export default function Task(props) {
             >
               {isDone ? "Undo" : "Done"}
             </Button>
-            {/* <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.button}
-                  // onClick={handleEdit}
-                >
-                  Edit Task
-                </Button> */}
             <ModalTask task={props.task}></ModalTask>
             <Button
               variant="contained"
