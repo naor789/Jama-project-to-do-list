@@ -1,14 +1,20 @@
 import React from "react";
-import { BrowserRouter , Link } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 import "../App.css";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton, Toolbar, Typography, AppBar , Button } from "@material-ui/core";
+import {
+  IconButton,
+  Toolbar,
+  Typography,
+  AppBar,
+  Button,
+  Grid,
+} from "@material-ui/core";
 import "firebase/auth";
 import "firebase/firestore";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import firebase from "firebase";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,27 +39,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavBar(props) {
   const classes = useStyles();
-    const history = useHistory();
-    const isSignedIn = props.isSignedIn;
+  const history = useHistory();
+  const isSignedIn = props.isSignedIn;
 
   const handleOnClick = () => {
     history.push("/landingpage");
   };
 
-    const handleLogOut = () => {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-              history.push("/")
-          })
-          .catch((error) => {
-            // An error happened.
-          });
-      
-  }
+  const handleLogOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
-    
   function HomeIcon(props) {
     return (
       <SvgIcon {...props}>
@@ -66,17 +70,23 @@ export default function NavBar(props) {
     <>
       <div className="container">
         <div className={classes.root}>
-          <AppBar position="static" className={classes.nav}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                className={classes.homeIcon}
-                color="inherit"
-                aria-label="Home"
-                onClick={handleOnClick}
-              >
-                <HomeIcon fontSize="large" />
-              </IconButton>
+                  <AppBar position="static" className={classes.nav}>
+                      <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.homeIcon}
+              color="inherit"
+              aria-label="Home"
+              onClick={handleOnClick}
+            >
+              <HomeIcon fontSize="large" />
+            </IconButton>
+            <Grid
+              container
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
               <Typography variant="h6">
                 <Link to="/todoform" className={classes.title}>
                   Add Task
@@ -84,14 +94,22 @@ export default function NavBar(props) {
                 <Link to="/tasklist" className={classes.title}>
                   To Do List
                 </Link>
+              </Typography>
+</Grid>
+              <Grid
+                container
+                direction="row"
+                justify="flex-end"
+                alignItems="center"
+              >
                 <Button
                   variant="contained"
                   onClick={handleLogOut}
                   type="button"
                 >
-                  Log Up{" "}
+                  Log Out{" "}
                 </Button>
-              </Typography>
+              </Grid>
             </Toolbar>
           </AppBar>
         </div>

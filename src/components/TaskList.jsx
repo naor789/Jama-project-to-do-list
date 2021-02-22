@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Task from "./Task";
-import { database, app } from "./firebase";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { database } from "./firebase";
+// import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Grid } from "@material-ui/core";
+import NavBar from "./NavBar";
 
 export default function TasksList() {
   const [tasksList, setTasksList] = useState([]);
@@ -31,10 +32,13 @@ export default function TasksList() {
   }, []);
 
   return (
+          <div className="container">
+            <NavBar></NavBar>
     <Grid direction="column" justify="space-evenly" alignItems="center">
       {tasksList.map((task) => (
         <Task key={task.id} task={task} />
       ))}
-    </Grid>
+      </Grid>
+      </div>
   );
 }

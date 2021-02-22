@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -11,6 +11,10 @@ import importanttt from "../images/importanttt.jpg";
 import snooze from "../images/snooze.jpg";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { database } from "./firebase";
+import firebase from "firebase";
+import { Modal } from "@material-ui/core";
+import { useAuthState } from "react-firebase-hooks/auth";
+import ModalTask from "./ModalTask"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +56,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Task(props) {
   const classes = useStyles();
   const { title, task, priorities, deadline, date , id } = props.task;
+  const [isDone, setIsDone] = useState(false);
+
+  // const handleEdit = () => {
+  //   setModalIsOpen(true);
+  // }
+
+  const handleDoneTask = () => {
+    
+}
 
   const deleteTask = () => {
     database
@@ -130,19 +143,27 @@ export default function Task(props) {
               <Grid container justify="flex-end" alignItems="flex-end">
                 <Button
                   className={classes.button}
-                  style={{ cursor: "pointer" }}
+                  onClick={handleDoneTask}
+                  // style={{ cursor: "pointer" }}
                 >
                   Done
                 </Button>
+                {/* <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  // onClick={handleEdit}
+                >
+                  Edit Task
+                </Button> */}
+                <ModalTask task={props.task}></ModalTask>
                 <Button
                   variant="contained"
                   color="secondary"
                   className={classes.button}
                   startIcon={<DeleteIcon />}
                   onClick={deleteTask}
-                >
-                  Delete
-                </Button>
+                >Delete</Button>
               </Grid>
             </Grid>
           </Grid>

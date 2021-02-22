@@ -65,20 +65,6 @@ export default function Home(props) {
       <div className="container">
         <NavBar isSignedIn={isSignedIn}></NavBar>
         <LandingPage name={displayName}></LandingPage>
-        {/* <Router>
-          <NavBar></NavBar>
-          <Switch>
-            <Route path="/todoform">
-              <ToDoForm></ToDoForm>
-            </Route>
-            <Route path="/tasklist">
-              <TasksList></TasksList>
-            </Route>
-            <Route path="/landingpage">
-              <LandingPage></LandingPage>
-            </Route>
-          </Switch>
-        </Router> */}
       </div>
     </>
   );
