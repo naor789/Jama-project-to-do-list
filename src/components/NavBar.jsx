@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Link } from "react-router-dom";
 import "../App.css";
 import { useHistory } from "react-router-dom";
@@ -40,17 +40,19 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar(props) {
   const classes = useStyles();
   const history = useHistory();
-  const isSignedIn = props.isSignedIn;
+  const [isSignedIn, setIsSignedIn] = useState(props.isSignedIn);
 
   const handleOnClick = () => {
     history.push("/landingpage");
   };
 
   const handleLogOut = () => {
+      setIsSignedIn({ isSignedIn: false });
     firebase
       .auth()
       .signOut()
       .then(() => {
+          console.log(isSignedIn);
         history.push("/");
       })
       .catch((error) => {
@@ -70,32 +72,32 @@ export default function NavBar(props) {
     <>
       <div className="container">
         <div className={classes.root}>
-                  <AppBar position="static" className={classes.nav}>
-                      <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.homeIcon}
-              color="inherit"
-              aria-label="Home"
-              onClick={handleOnClick}
-            >
-              <HomeIcon fontSize="large" />
-            </IconButton>
-            <Grid
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="center"
-            >
-              <Typography variant="h6">
-                <Link to="/todoform" className={classes.title}>
-                  Add Task
-                </Link>{" "}
-                <Link to="/tasklist" className={classes.title}>
-                  To Do List
-                </Link>
-              </Typography>
-</Grid>
+          <AppBar position="static" className={classes.nav}>
+            <Toolbar>
+              <IconButton
+                edge="start"
+                className={classes.homeIcon}
+                color="inherit"
+                aria-label="Home"
+                onClick={handleOnClick}
+              >
+                <HomeIcon fontSize="large" />
+              </IconButton>
+              <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="center"
+              >
+                <Typography variant="h6">
+                  <Link to="/todoform" className={classes.title}>
+                    Add Task
+                  </Link>{" "}
+                  <Link to="/tasklist" className={classes.title}>
+                    To Do List
+                  </Link>
+                </Typography>
+              </Grid>
               <Grid
                 container
                 direction="row"

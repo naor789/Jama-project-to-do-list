@@ -35,13 +35,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home(props) {
-  console.log(props);
   const [log, setLog] = useState();
   const displayName = props.user;
- const isSignedIn = props.isSignedIn;
+  const isSignedIn = props.isSignedIn;
   const classes = useStyles();
   const history = useHistory();
-  console.log("ani", displayName);
 
   // useEffect(() => {
   //   setLog(displayName);

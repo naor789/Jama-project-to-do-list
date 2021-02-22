@@ -71,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ModalTask(props) {
   const classes = useStyles();
   const { id } = props;
-  console.log(props.task.title);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -91,10 +90,7 @@ export default function ModalTask(props) {
 
   const handleEditTask = (event) => {
     event.preventDefault();
-    console.log("title", title);
-
     const updateRef = firebase.firestore().collection("tasks").doc(id);
-    console.log(updateRef);
     updateRef
       .set({
         title: title,

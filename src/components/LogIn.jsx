@@ -20,6 +20,7 @@ import firebaseui from "firebaseui";
 import Home from "./Home";
 import { AuthContext } from "../context/AuthContext";
 import { userInfo } from "os";
+import { database } from "./firebase";
 
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -56,11 +57,6 @@ const useStyles = makeStyles({
   },
 });
 
-// firebase.initializeApp({
-//   apiKey: "AIzaSyCyHntjzxnknCzqAN4qawQHUcZQfgIMiFE",
-//   authDomain: "fir-auth-tutorial-ed11f.firebaseapp.com",
-// });
-
 export default function LogIn() {
   const classes = useStyles();
   // const [currentUser, setCurrentUser] = useContext(AuthContext);
@@ -82,7 +78,7 @@ export default function LogIn() {
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      // firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
     callbacks: {
       signInSuccess: () => false,
@@ -90,31 +86,32 @@ export default function LogIn() {
   };
 
   useEffect(() => {
-    // firebase.auth().setPersistence.then( )
     firebase.auth().onAuthStateChanged((user) => {
       setIsSignedIn({ isSignedIn: !!user });
-      console.log("hi", firebase.auth().currentUser.displayName);
-      setName(firebase.auth().currentUser.displayName);
-      // console.log("hhhhhhhhhhhhhh", firebase.auth().currentUser);
-      // currentUser.push(firebase.auth().currentUser);
+      setName(user.displayName);
+      database
+        .collection("users")
+        .add({
+          userName: user.displayName,
+          email: user.email,
+          createdAt: Date.now(),
+        })
+        .then(function (docRef) {
+          console.log(docRef);
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+          console.error("Error adding document: ", error);
+        });
 
-      // setCurrentUser(firebase.auth().currentUser);
-
-      console.log(currentUser, "yhgjygdgdhfd");
       // history.push("/home");
       // window.location.reload();
     });
   }, []);
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   history.push("/home");
-  // };
-
   return (
     <div>
-      {isSignedIn ? (
+      {isSignedIn.isSignedIn ? (
         <div>
           <Home user={name} isSignedIn={isSignedIn}>
             {" "}

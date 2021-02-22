@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useHistory , Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 // import axios from "axios";
 import {
   Button,
@@ -53,12 +53,11 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-        database
+    database
       .collection("users")
-          .add({
+      .add({
         email: email,
         password: password,
-        confirmPassword: confirmPassword,
       })
       .then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);
@@ -67,11 +66,11 @@ export default function SignUp() {
         console.error("Error adding document: ", error);
       });
 
-    console.log("userr" );
+    console.log("userr");
     setPassword("");
     setConfirmPassword("");
     setEmail("");
-    history.push("/home");
+    // history.push("/home");
   };
 
   return (
@@ -97,7 +96,6 @@ export default function SignUp() {
                   className={classes.textField}
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-
                 />
               </div>
               <div>
@@ -109,7 +107,6 @@ export default function SignUp() {
                   className={classes.textField}
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-
                 />
               </div>
               <div>
@@ -121,7 +118,6 @@ export default function SignUp() {
                   className={classes.textField}
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
-
                 />
               </div>
             </div>

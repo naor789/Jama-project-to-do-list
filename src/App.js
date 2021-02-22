@@ -17,30 +17,30 @@ export default function App() {
 
   return (
     <AuthProvider>
-    <Router>
-      {/* <NavBar></NavBar> */}
+      <Router>
+        {/* <NavBar></NavBar> */}
         <div className="container">
           <Switch>
-          <Route exact path="/" component={LogIn} />
+            <Route exact path="/" component={LogIn} />
             <Route path="/signup" component={SignUp} />
             <Route path="/home" component={Home} />
-                    {/* <Route exact path="/">
+            {/* <Route exact path="/">
                       <LogIn></LogIn>
                     </Route> */}
-          <Route path="/todoform">
-            <ToDoForm></ToDoForm>
-          </Route>
-          <Route path="/tasklist">
-            <TasksList></TasksList>
-          </Route>
-          <Route path="/landingpage">
-            <LandingPage></LandingPage>
-          </Route>
-                  </Switch>
+            <Route path="/todoform">
+              <ToDoForm></ToDoForm>
+            </Route>
+            <Route path="/tasklist">
+              <TasksList></TasksList>
+            </Route>
+            <Route path="/landingpage">
+              <LandingPage></LandingPage>
+            </Route>
+          </Switch>
 
 
-</div>
-                </Router>
+        </div>
+      </Router>
     </AuthProvider>
   );
 }
