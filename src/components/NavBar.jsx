@@ -47,16 +47,15 @@ export default function NavBar(props) {
   };
 
   const handleLogOut = () => {
-      setIsSignedIn({ isSignedIn: false });
+    setIsSignedIn({ isSignedIn: false });
     firebase
       .auth()
       .signOut()
       .then(() => {
-          console.log(isSignedIn);
         history.push("/");
       })
       .catch((error) => {
-        // An error happened.
+        console.log(error);
       });
   };
 

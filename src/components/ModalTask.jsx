@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
-  ButtonBase,
   FormControl,
   FormGroup,
   Grid,
@@ -16,7 +15,6 @@ import {
 } from "@material-ui/core";
 import firebase from "firebase";
 import { database } from "./firebase";
-// import { useAuthState } from "react-firebase-hooks/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,16 +46,12 @@ const useStyles = makeStyles((theme) => ({
   },
   modal: {
     margin: 50,
-    // padding: 20,
   },
   paper: {
-    // padding: theme.spacing(2),
     padding: 15,
     margin: "auto",
     maxWidth: 600,
     fontFamily: "RocknRoll One, sans-serif",
-    // backgroundColor: "rgba(255, 255, 255, 0.7)",
-    // borderRadius: 15,
   },
   save: {
     backgroundColor: "#586A7C",
@@ -110,7 +104,6 @@ export default function ModalTask(props) {
         console.error("Error adding document: ", error);
       });
   };
-
 
   const body = (
     <Paper className={classes.paper}>

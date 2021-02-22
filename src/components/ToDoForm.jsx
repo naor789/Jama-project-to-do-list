@@ -69,17 +69,11 @@ export default function ToDoForm() {
       })
       .then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);
+        history.push("/tasklist");
       })
       .catch(function (error) {
         console.error("Error adding document: ", error);
       });
-
-    console.log("new task");
-    setTitle("");
-    setTask("");
-    setPriorities("");
-    setDeadline("");
-    history.push("/tasklist");
   };
 
   return (
@@ -144,7 +138,6 @@ export default function ToDoForm() {
                         <MenuItem value={2}>Snoozed</MenuItem>
                       </Select>
                     </FormControl>
-                    {/* <form className={classes.container} noValidate> */}
                     <TextField
                       id="date"
                       label="Deadline"
@@ -157,7 +150,6 @@ export default function ToDoForm() {
                       value={deadline}
                       onChange={(event) => setDeadline(event.target.value)}
                     />
-                    {/* </form> */}
                   </Grid>
                 </FormGroup>
               </CardContent>

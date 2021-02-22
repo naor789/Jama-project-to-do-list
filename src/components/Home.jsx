@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "../App.css";
-// import TasksList from "./TaskList";
-// import ToDoForm from "../components/ToDoForm";
-// import LandingPage from "./LandingPage";
-// import NavBar from "./NavBar";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import "firebase/auth";
@@ -40,15 +35,6 @@ export default function Home(props) {
   const isSignedIn = props.isSignedIn;
   const classes = useStyles();
   const history = useHistory();
-
-  // useEffect(() => {
-  //   setLog(displayName);
-  //   console.log("log" ,log);
-  // }, []);
-
-  // const handleOnClick = () => {
-  // history.push("/landingpage");
-  // }
 
   function HomeIcon(props) {
     return (

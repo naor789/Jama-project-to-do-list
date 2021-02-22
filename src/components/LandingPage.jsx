@@ -17,14 +17,17 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    marginLeft: 45,
     textDecoration: "none",
-    color: "white",
     fontFamily: "RocknRoll One, sans-serif",
+    fontSize: 40,
   },
   image: {
     maxWidth: 600,
     borderRadius: 15,
+  },
+  h1: {
+    position: "relative",
+    top: 238,
   },
 }));
 
@@ -37,13 +40,21 @@ export default function LandingPage(props) {
 
   return (
     <>
-      <Grid container direction="col" justify="center" alignItems="center">
-        <h1>Welcom {name ? name : "user"}</h1>
-          </Grid>
-           <Grid container direction="col" justify="center" alignItems="center">
-      <div>"Either you run the day , or the day runs you" </div>
-      <div>- Jim Rohn</div>
-</Grid>
+      <Grid
+        container
+        direction="col"
+        justify="center"
+        alignItems="center"
+        className={classes.h1}
+      >
+        <Grid>
+          <h1 className={classes.title}>Welcom {name ? name : "user"}</h1>
+        </Grid>
+        <Grid container direction="col" justify="center" alignItems="center">
+          <div>"Either you run the day , or the day runs you" </div>
+          <div>- Jim Rohn</div>
+        </Grid>
+      </Grid>
       <Grid container direction="col" justify="center" alignItems="center">
         <img src={cupcake} alt="cupcake" className={classes.image} />
       </Grid>

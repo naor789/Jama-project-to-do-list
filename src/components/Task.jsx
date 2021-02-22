@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
   },
   grid: {
-    marginBottom:20,
+    marginBottom: 20,
   },
 }));
 
@@ -127,20 +127,6 @@ export default function Task(props) {
             {new Date(date).toString()}
           </Typography>
         </Grid>
-        {/* <Grid container spacing={2}> */}
-        {/* <Grid item>
-            <ButtonBase className={classes.image}>
-              {priorities === 1 ? (
-                <img
-                  className={classes.img}
-                  alt="important"
-                  src={importanttt}
-                />
-              ) : (
-                <img className={classes.img} alt="snooze" src={snooze} />
-              )}
-            </ButtonBase>
-          </Grid> */}
         <Grid item xs={12} sm container>
           <Grid
             container
@@ -149,8 +135,7 @@ export default function Task(props) {
             alignItems="center"
             className={classes.grid}
           >
-            <Grid
-            >
+            <Grid>
               <Typography gutterBottom variant="h5" className={classes.text}>
                 {title}
               </Typography>
@@ -181,11 +166,7 @@ export default function Task(props) {
             justify="space-around"
             alignItems="flex-end"
           >
-            <Button
-              className={classes.button}
-              onClick={handleDoneTask}
-              // style={{ cursor: "pointer" }}
-            >
+            <Button className={classes.button} onClick={handleDoneTask}>
               {isDone ? "Undo" : "Done"}
             </Button>
             <ModalTask task={props.task}></ModalTask>
